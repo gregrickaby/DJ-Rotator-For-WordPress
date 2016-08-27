@@ -17,6 +17,9 @@
  * @version 1.0.0
  */
 
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Copyright (c) 2016 Greg Rickaby (email : greg@gregrickaby.com)
  *
