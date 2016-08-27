@@ -47,7 +47,7 @@
  * @param  string $class_name Name of the class being requested.
  * @return void
  */
-function dj_rotator_for_wordpress_autoload_classes( $class_name ) {
+function grd_rotator_autoload_classes( $class_name ) {
 	if ( 0 !== strpos( $class_name, 'GRDR_' ) ) {
 		return;
 	}
@@ -59,7 +59,7 @@ function dj_rotator_for_wordpress_autoload_classes( $class_name ) {
 
 	GRD_Rotator::include_file( $filename );
 }
-spl_autoload_register( 'dj_rotator_for_wordpress_autoload_classes' );
+spl_autoload_register( 'grd_rotator_autoload_classes' );
 
 /**
  * Main initiation class
@@ -150,7 +150,6 @@ final class GRD_Rotator {
 	public function plugin_classes() {
 		// Attach other plugin classes to the base plugin class.
 		$this->grd_dj_cpt = new GRDR_Grd_Dj_Cpt( $this );
-		require( self::dir( 'includes/class-grd-dj-widget.php' ) );
 	} // END OF PLUGIN CLASSES FUNCTION
 
 	/**
@@ -326,12 +325,26 @@ final class GRD_Rotator {
  * @since  1.0.0
  * @return GRD_Rotator  Singleton instance of plugin class.
  */
-function dj_rotator_for_wordpress() {
+function grd_rotator() {
 	return GRD_Rotator::get_instance();
 }
 
-// Kick it off.
-add_action( 'plugins_loaded', array( dj_rotator_for_wordpress(), 'hooks' ) );
+// Include files.
+require_once( 'includes/class-grd-dj-widget.php' );
 
-register_activation_hook( __FILE__, array( dj_rotator_for_wordpress(), '_activate' ) );
-register_deactivation_hook( __FILE__, array( dj_rotator_for_wordpress(), '_deactivate' ) );
+/**
+ * Register this widget with WordPress. Can also move this function to the parent plugin.
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function grd_register_widget() {
+	register_widget( 'GRDR_Grd_Dj_Widget' );
+}
+add_action( 'widgets_init', 'grd_register_widget' );
+
+// Kick it off.
+add_action( 'plugins_loaded', array( grd_rotator(), 'hooks' ) );
+
+register_activation_hook( __FILE__, array( grd_rotator(), '_activate' ) );
+register_deactivation_hook( __FILE__, array( grd_rotator(), '_deactivate' ) );
