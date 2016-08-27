@@ -61,6 +61,9 @@ function grd_rotator_autoload_classes( $class_name ) {
 }
 spl_autoload_register( 'grd_rotator_autoload_classes' );
 
+// Include files.
+require_once( 'includes/class-grd-dj-widget.php' );
+
 /**
  * Main initiation class
  *
@@ -329,8 +332,11 @@ function grd_rotator() {
 	return GRD_Rotator::get_instance();
 }
 
-// Include files.
-require_once( 'includes/class-grd-dj-widget.php' );
+// Kick it off.
+add_action( 'plugins_loaded', array( grd_rotator(), 'hooks' ) );
+
+register_activation_hook( __FILE__, array( grd_rotator(), '_activate' ) );
+register_deactivation_hook( __FILE__, array( grd_rotator(), '_deactivate' ) );
 
 /**
  * Register this widget with WordPress. Can also move this function to the parent plugin.
@@ -342,9 +348,3 @@ function grd_register_widget() {
 	register_widget( 'GRDR_Grd_Dj_Widget' );
 }
 add_action( 'widgets_init', 'grd_register_widget' );
-
-// Kick it off.
-add_action( 'plugins_loaded', array( grd_rotator(), 'hooks' ) );
-
-register_activation_hook( __FILE__, array( grd_rotator(), '_activate' ) );
-register_deactivation_hook( __FILE__, array( grd_rotator(), '_deactivate' ) );
