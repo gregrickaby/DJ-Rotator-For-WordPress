@@ -74,37 +74,111 @@ class GRDR_Grd_Dj_Cpt extends CPT_Core {
 		$cmb = new_cmb2_box( array(
 			'id'            => $prefix . 'metabox',
 			'title'         => __( 'DJ Options', 'grd-rotator' ),
-			'object_types'  => array( 'page', 'grd-djs' ),
-			// 'show_on_cb' => 'yourprefix_show_if_front_page', // function should return a bool value
-			// 'context'    => 'normal',
-			// 'priority'   => 'high',
-			// 'show_names' => true, // Show field names on the left
-			// 'cmb_styles' => false, // false to disable the CMB stylesheet
-			// 'closed'     => true, // true to keep the metabox closed by default
-			// 'classes'    => 'extra-class', // Extra cmb2-wrap classes
-			// 'classes_cb' => 'yourprefix_add_some_classes', // Add classes through a callback.
+			'object_types'  => array( 'grd-djs' ),
 		) );
 
-
-	$cmb->add_field( array(
-		'name'       => esc_html__( 'Test Text', 'cmb2' ),
-		'desc'       => esc_html__( 'field description (optional)', 'cmb2' ),
-		'id'         => $prefix . 'text',
-		'type'       => 'text',
-		'show_on_cb' => 'yourprefix_hide_if_no_cats', // function should return a bool value
-		// 'sanitization_cb' => 'my_custom_sanitization', // custom sanitization callback parameter
-		// 'escape_cb'       => 'my_custom_escaping',  // custom escaping callback parameter
-		// 'on_front'        => false, // Optionally designate a field to wp-admin only
-		// 'repeatable'      => true,
-		// 'column'          => true, // Display field value in the admin post-listing columns
-	) );
+		/**
+		 * Bio.
+		 */
+		$cmb->add_field( array(
+			'name' => __( 'Image', 'grd-rotator' ),
+			'desc' => __( 'Upload an image or enter a URL. 640x640px (jpg, png)', 'grd-rotator' ),
+			'id'   => $prefix . 'image',
+			'type' => 'file',
+		) );
 
 		$cmb->add_field( array(
-			'name' => esc_html__( 'Test Date Picker', 'cmb2' ),
-			'desc' => esc_html__( 'field description (optional)', 'cmb2' ),
-			'id'   => $prefix . 'textdate',
-			'type' => 'text_date',
-			// 'date_format' => 'Y-m-d',
+			'name'    => __( 'Biography', 'grd-rotator' ),
+			'desc'    => __( 'Optional. Write a quick blurb about this DJ.', 'grd-rotator' ),
+			'id'      => $prefix . 'wysiwyg',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'media_buttons' => false,
+				'textarea_rows' => 5,
+			),
+		) );
+
+		$cmb->add_field( array(
+			'name' => __( 'Website URL', 'grd-rotator' ),
+			'desc' => __( 'Optional. http://gregrickaby.com', 'grd-rotator' ),
+			'id'   => $prefix . '_website_url',
+			'type' => 'text_url',
+		) );
+
+		$cmb->add_field( array(
+			'name' => __( 'Facebook URL', 'grd-rotator' ),
+			'desc' => __( 'Optional. https://www.facebook.com/gregrickaby/', 'grd-rotator' ),
+			'id'   => $prefix . '_facebook_url',
+			'type' => 'text_url',
+		) );
+
+		$cmb->add_field( array(
+			'name' => __( 'Twitter URL', 'grd-rotator' ),
+			'desc' => __( 'Optional. https://twitter.com/gregrickaby/', 'grd-rotator' ),
+			'id'   => $prefix . '_twitter_url',
+			'type' => 'text_url',
+		) );
+
+		$cmb->add_field( array(
+			'name' => __( 'Instagram URL', 'grd-rotator' ),
+			'desc' => __( 'Optional. https://www.instagram.com/gregoryrickaby/', 'grd-rotator' ),
+			'id'   => $prefix . 'instagram_url',
+			'type' => 'text_url',
+		) );
+
+		/**
+		 * Schedule.
+		 */
+		$cmb_group = new_cmb2_box( array(
+			'id'           => $prefix . 'metabox',
+			'title'        => __( 'DJ Schedule', 'grd-rotator' ),
+			'object_types' => array( 'grd-djs' ),
+		) );
+
+		$group_field_id = $cmb_group->add_field( array(
+			'id'          => $prefix . 'schedule_group',
+			'type'        => 'group',
+			'description' => __( 'Create a schedule for this DJ.', 'grd-rotator' ),
+			'options'     => array(
+				'group_title'   => __( 'Day {#}', 'grd-rotator' ), // {#} gets replaced by row number
+				'add_button'    => __( 'Add Another Day', 'grd-rotator' ),
+				'remove_button' => __( 'Remove Day', 'grd-rotator' ),
+				'sortable'      => false, // beta
+				'closed'        => true, // true to have the groups closed by default
+			),
+		) );
+
+		$cmb_group->add_group_field( $group_field_id, array(
+			'name'             => __( 'Day of the week', 'grd-rotator' ),
+			'desc'             => __( 'Required.', 'grd-rotator' ),
+			'id'               => $prefix . 'weekday',
+			'type'             => 'select',
+			'show_option_none' => false,
+			'options'          => array(
+				'sun' => __( 'Sunday', 'grd-rotator' ),
+				'mon' => __( 'Monday', 'grd-rotator' ),
+				'tue' => __( 'Tuesday', 'grd-rotator' ),
+				'wed' => __( 'Wednesday', 'grd-rotator' ),
+				'thu' => __( 'Thursday', 'grd-rotator' ),
+				'fri' => __( 'Friday', 'grd-rotator' ),
+				'sat' => __( 'Saturday', 'grd-rotator' ),
+			),
+		) );
+
+		$cmb_group->add_group_field( $group_field_id, array(
+			'name'        => __( 'Start Time', 'grd-rotator' ),
+			'desc'        => __( 'Required.', 'grd-rotator' ),
+			'id'          => $prefix . 'start_time',
+			'type'        => 'text_time',
+			'time_format' => 'H:i',
+		) );
+
+		$cmb_group->add_group_field( $group_field_id, array(
+			'name'        => __( 'End Time', 'grd-rotator' ),
+			'desc'        => __( 'Required.', 'grd-rotator' ),
+			'id'          => $prefix . 'end_time',
+			'type'        => 'text_time',
+			'time_format' => 'H:i',
 		) );
 	}
 
