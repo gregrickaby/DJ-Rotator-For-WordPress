@@ -6,6 +6,9 @@
  * @package DJ Rotator for WordPress
  */
 
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
+
 /**
  * DJ Rotator for WordPress Grd Dj Cpt post type class.
  *
@@ -87,7 +90,7 @@ class GRDR_Grd_Dj_Cpt extends CPT_Core {
 		$cmb->add_field( array(
 			'name'    => __( 'Biography', 'grd-rotator' ),
 			'desc'    => __( 'Optional. Write a quick blurb about this DJ.', 'grd-rotator' ),
-			'id'      => $prefix . 'wysiwyg',
+			'id'      => $prefix . 'bio',
 			'type'    => 'wysiwyg',
 			'options' => array(
 				'media_buttons' => false,
@@ -98,21 +101,21 @@ class GRDR_Grd_Dj_Cpt extends CPT_Core {
 		$cmb->add_field( array(
 			'name' => __( 'Website URL', 'grd-rotator' ),
 			'desc' => __( 'Optional. http://gregrickaby.com', 'grd-rotator' ),
-			'id'   => $prefix . '_website_url',
+			'id'   => $prefix . 'website_url',
 			'type' => 'text_url',
 		) );
 
 		$cmb->add_field( array(
 			'name' => __( 'Facebook URL', 'grd-rotator' ),
 			'desc' => __( 'Optional. https://www.facebook.com/gregrickaby/', 'grd-rotator' ),
-			'id'   => $prefix . '_facebook_url',
+			'id'   => $prefix . 'facebook_url',
 			'type' => 'text_url',
 		) );
 
 		$cmb->add_field( array(
 			'name' => __( 'Twitter URL', 'grd-rotator' ),
 			'desc' => __( 'Optional. https://twitter.com/gregrickaby/', 'grd-rotator' ),
-			'id'   => $prefix . '_twitter_url',
+			'id'   => $prefix . 'twitter_url',
 			'type' => 'text_url',
 		) );
 
@@ -177,6 +180,47 @@ class GRDR_Grd_Dj_Cpt extends CPT_Core {
 			'type'        => 'text_time',
 			'time_format' => 'H:i',
 		) );
+	}
+
+
+	/**
+	 * Get all the DJs via WP_Query
+	 *
+	 * @since  1.0.0
+	 * @param  array   $args  Optional WP_Query arguments.
+	 * @return object         WP_Query results.
+	 */
+	public function get_all_djs( $args = array() ) {
+
+		// Set transient key.
+		$transient_key = 'grd_all_djs';
+
+		// Attempt to fetch from transient.
+		$data = get_transient( $transient_key );
+
+		// If there isn't a transient...
+		if ( false === ( $data ) ) {
+
+			// Set up query args.
+			$defaults = array(
+				'post_type'              => 'grd-djs',
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
+			);
+
+			// Parse any available args.
+			$args = wp_parse_args( $args, $defaults );
+
+			// Run query.
+			$data = new WP_Query( $args );
+
+			// Set transient, and expire after a max of 12 hours.
+			set_transient( $transient_key, $data, 12 * HOUR_IN_SECONDS );
+
+		}
+
+		return $data;
 	}
 
 	/**
