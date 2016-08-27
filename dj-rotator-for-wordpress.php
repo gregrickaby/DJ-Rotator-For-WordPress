@@ -62,8 +62,8 @@ function grd_rotator_autoload_classes( $class_name ) {
 spl_autoload_register( 'grd_rotator_autoload_classes' );
 
 // Include files.
-require_once dirname(__FILE__) . '/../vendor/cpt-core/CPT_Core.php';
-require_once dirname(__FILE__) . '/../vendor/cmb2/init.php';
+require_once( 'vendor/cpt-core/CPT_Core.php' );
+require_once( 'vendor/cmb2/init.php' );
 require_once( 'includes/class-grd-dj-widget.php' );
 require_once( 'includes/template-tags.php' );
 
