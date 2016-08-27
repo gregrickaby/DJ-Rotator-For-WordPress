@@ -150,6 +150,7 @@ final class GRD_Rotator {
 	public function plugin_classes() {
 		// Attach other plugin classes to the base plugin class.
 		$this->grd_dj_cpt = new GRDR_Grd_Dj_Cpt( $this );
+		require( self::dir( 'includes/class-grd-dj-widget.php' ) );
 	} // END OF PLUGIN CLASSES FUNCTION
 
 	/**
