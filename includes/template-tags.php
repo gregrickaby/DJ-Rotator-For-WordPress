@@ -40,7 +40,7 @@ function grd_get_current_time() {
  * @param  int    $post_ID   The post ID.
  * @return int               The DJ image ID.
  */
-function grd_get_dj_image_ID( $post_ID ) {
+function grd_get_dj_image_ID( $post_ID = false ) {
 	$post_ID = ( $post_ID ) ? $post_ID : get_the_ID();
 	return get_post_meta( $post_ID, 'grd_dj_image_id', true );
 }
@@ -53,7 +53,7 @@ function grd_get_dj_image_ID( $post_ID ) {
  * @param  int    $post_ID   The post ID.
  * @return string            The DJ image URL.
  */
-function grd_get_dj_image_url( $post_ID ) {
+function grd_get_dj_image_url( $post_ID = false ) {
 	$post_ID = ( $post_ID ) ? $post_ID : get_the_ID();
 	return get_post_meta( $post_ID, 'grd_dj_image', true );
 }
@@ -66,7 +66,7 @@ function grd_get_dj_image_url( $post_ID ) {
  * @param  int    $post_ID   The post ID.
  * @return string            The DJ biography.
  */
-function grd_get_dj_bio( $post_ID ) {
+function grd_get_dj_bio( $post_ID = false ) {
 	$post_ID = ( $post_ID ) ? $post_ID : get_the_ID();
 	return get_post_meta( $post_ID, 'grd_dj_bio', true );
 }
