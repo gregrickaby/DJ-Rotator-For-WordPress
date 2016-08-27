@@ -6,9 +6,6 @@
  * @package DJ Rotator for WordPress
  */
 
-require_once dirname(__FILE__) . '/../vendor/cpt-core/CPT_Core.php';
-require_once dirname(__FILE__) . '/../vendor/cmb2/init.php';
-
 /**
  * DJ Rotator for WordPress Grd Dj Cpt post type class.
  *
