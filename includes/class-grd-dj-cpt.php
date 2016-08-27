@@ -82,7 +82,7 @@ class GRDR_Grd_Dj_Cpt extends CPT_Core {
 		 */
 		$cmb->add_field( array(
 			'name' => __( 'Image', 'grd-rotator' ),
-			'desc' => __( 'Upload an image or enter a URL. 640x640px (jpg, png)', 'grd-rotator' ),
+			'desc' => __( 'Required. Upload an image or enter a URL. 640x640px (jpg, png)', 'grd-rotator' ),
 			'id'   => $prefix . 'image',
 			'type' => 'file',
 		) );
@@ -140,34 +140,34 @@ class GRDR_Grd_Dj_Cpt extends CPT_Core {
 			'type'        => 'group',
 			'description' => __( 'Create a schedule for this DJ.', 'grd-rotator' ),
 			'options'     => array(
-				'group_title'   => __( 'Day {#}', 'grd-rotator' ), // {#} gets replaced by row number
-				'add_button'    => __( 'Add Another Day', 'grd-rotator' ),
-				'remove_button' => __( 'Remove Day', 'grd-rotator' ),
-				'sortable'      => false, // beta
-				'closed'        => true, // true to have the groups closed by default
+				'group_title'   => __( 'Air Shift {#}', 'grd-rotator' ),
+				'add_button'    => __( 'Add Another Shift', 'grd-rotator' ),
+				'remove_button' => __( 'Remove Shift', 'grd-rotator' ),
+				'sortable'      => false,
+				'closed'        => false,
 			),
 		) );
 
 		$cmb_group->add_group_field( $group_field_id, array(
-			'name'             => __( 'Day of the week', 'grd-rotator' ),
+			'name'             => __( 'Day of the Week', 'grd-rotator' ),
 			'desc'             => __( 'Required.', 'grd-rotator' ),
 			'id'               => $prefix . 'weekday',
 			'type'             => 'select',
 			'show_option_none' => false,
 			'options'          => array(
-				'sun' => __( 'Sunday', 'grd-rotator' ),
 				'mon' => __( 'Monday', 'grd-rotator' ),
 				'tue' => __( 'Tuesday', 'grd-rotator' ),
 				'wed' => __( 'Wednesday', 'grd-rotator' ),
 				'thu' => __( 'Thursday', 'grd-rotator' ),
 				'fri' => __( 'Friday', 'grd-rotator' ),
 				'sat' => __( 'Saturday', 'grd-rotator' ),
+				'sun' => __( 'Sunday', 'grd-rotator' ),
 			),
 		) );
 
 		$cmb_group->add_group_field( $group_field_id, array(
 			'name'        => __( 'Start Time', 'grd-rotator' ),
-			'desc'        => __( 'Required.', 'grd-rotator' ),
+			'desc'        => __( 'Required. 24 hour format. 06:00', 'grd-rotator' ),
 			'id'          => $prefix . 'start_time',
 			'type'        => 'text_time',
 			'time_format' => 'H:i',
@@ -175,7 +175,7 @@ class GRDR_Grd_Dj_Cpt extends CPT_Core {
 
 		$cmb_group->add_group_field( $group_field_id, array(
 			'name'        => __( 'End Time', 'grd-rotator' ),
-			'desc'        => __( 'Required.', 'grd-rotator' ),
+			'desc'        => __( 'Required. 24 hour format. 10:00', 'grd-rotator' ),
 			'id'          => $prefix . 'end_time',
 			'type'        => 'text_time',
 			'time_format' => 'H:i',
