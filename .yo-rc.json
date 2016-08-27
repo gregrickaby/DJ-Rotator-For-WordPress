@@ -1,0 +1,17 @@
+{
+  "generator-plugin-wp": {
+    "name": "DJ Rotator for WordPress",
+    "homepage": "https://github.com/gregrickaby/DJ-Rotator-For-WordPress",
+    "description": "Easily manage disc jockey on-air schedules and display them in your sidebar.",
+    "version": "1.0.0",
+    "author": "Greg Rickaby",
+    "authoremail": "greg@gregrickaby.com",
+    "authorurl": "https://gregrickaby.com",
+    "license": "GPLv3",
+    "slug": "dj-rotator-for-wordpress",
+    "classname": "GRD_Rotator",
+    "classprefix": "GRDR_",
+    "prefix": "dj_rotator_for_wordpress",
+    "year": 2016
+  }
+}
