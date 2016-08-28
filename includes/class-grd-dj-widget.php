@@ -136,16 +136,49 @@ class GRDR_Grd_Dj_Widget extends WP_Widget {
 			self::$shortcode
 		);
 
-		// Before widget hook.
-		$widget .= $atts['before_widget'];
+		// Setup data variables.
+		$dj_query = grd_get_all_djs();
+		$blog_time = grd_get_current_time();
+		$current_weekday = date( 'D', $blog_time );
+		$current_time = date( 'U' , $blog_time );
 
-		// Title.
-		$widget .= ( $atts['title'] ) ? $atts['before_title'] . esc_html( $atts['title'] ) . $atts['after_title'] : '';
+		// Start the widget markup.
+		ob_start();
 
-		// After widget hook.
-		$widget .= $atts['after_widget'];
+		echo $atts['before_widget'];
+		echo ( $atts['title'] ) ? $atts['before_title'] . esc_html( $atts['title'] ) . $atts['after_title'] : '';
 
-		return $widget;
+		// If there are DJs...
+		if ( $dj_query->have_posts() ) : ?>
+
+			<ul class="dj-rotator">
+
+			<?php
+				while ( $dj_query->have_posts() ) : $dj_query->the_post();
+
+					// Get this DJ's shifts.
+					$shifts = grd_get_dj_schedule();
+
+					// Loop through shifts.
+					foreach ( $shifts as $shift ) :
+
+						// Only echo if the shift falls between this date/time comparison.
+						if ( $shift['grd_dj_weekday'] === $current_weekday && $shift['grd_dj_start_time'] <= $current_time && $shift['grd_dj_end_time'] >= $current_time ) :
+							echo grd_get_dj_markup();
+						endif;
+
+					endforeach;
+				endwhile;
+				wp_reset_postdata();
+			?>
+
+			</ul><!-- .dj-rotator -->
+
+		<?php endif;
+		echo $atts['after_widget'];
+
+		// Return widget markup.
+		return ob_get_clean();
 	}
 
 
