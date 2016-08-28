@@ -114,7 +114,7 @@ class GRDR_Grd_Dj_Widget extends WP_Widget {
 
 
 	/**
-	 * Return the widget/shortcode output
+	 * Return the widget/shortcode output.
 	 *
 	 * @since  1.0.0
 	 * @param  array $atts Array of widget/shortcode attributes/args.
@@ -140,7 +140,7 @@ class GRDR_Grd_Dj_Widget extends WP_Widget {
 		$dj_query = grd_get_all_djs();
 		$blog_time = grd_get_current_time();
 		$current_weekday = date( 'D', $blog_time );
-		$current_time = date( 'U' , $blog_time );
+		$current_time = date( 'H:i' , $blog_time );
 
 		// Start the widget markup.
 		ob_start();
@@ -163,7 +163,7 @@ class GRDR_Grd_Dj_Widget extends WP_Widget {
 					foreach ( $shifts as $shift ) :
 
 						// Only echo if the shift falls between this date/time comparison.
-						if ( $shift['grd_dj_weekday'] === $current_weekday && $shift['grd_dj_start_time'] <= $current_time && $shift['grd_dj_end_time'] >= $current_time ) :
+						if ( $shift['grd_dj_weekday'] == $current_weekday && $shift['grd_dj_start_time'] <= $current_time && $shift['grd_dj_end_time'] >= $current_time ) :
 							echo grd_get_dj_markup();
 						endif;
 
