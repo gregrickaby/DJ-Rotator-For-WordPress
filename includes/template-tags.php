@@ -9,6 +9,24 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
+
+/**
+ * Helper to flush transient cache.
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function grd_cache_flush() {
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return false;
+	}
+	delete_transient( 'grd_all_djs' );
+	wp_cache_delete( 'grd-rotator', 'widget' );
+}
+add_action( 'delete_category', 'grd_cache_flush' );
+add_action( 'save_post', 'grd_cache_flush' );
+
+
 /**
  * Helper to get all published DJs.
  *
@@ -29,7 +47,7 @@ function grd_get_all_djs( $args = array() ) {
  * @return string  Local time in UNIX format.
  */
 function grd_get_current_time() {
-	return current_time( 'timestamp', true );
+	return current_time( 'timestamp', 0 );
 }
 
 
@@ -69,4 +87,17 @@ function grd_get_dj_image_url( $post_ID = false ) {
 function grd_get_dj_bio( $post_ID = false ) {
 	$post_ID = ( $post_ID ) ? $post_ID : get_the_ID();
 	return get_post_meta( $post_ID, 'grd_dj_bio', true );
+}
+
+
+/**
+ * Helper to get DJ schedule.
+ *
+ * @since 1.0.0
+ * @param  int    $post_ID   The post ID.
+ * @return array             The DJ schedule in a multidimensional array.
+ */
+function grd_get_dj_schedule( $post_ID = false ) {
+	$post_ID = ( $post_ID ) ? $post_ID : get_the_ID();
+	return get_post_meta( $post_ID, 'grd_dj_schedule_group', true );
 }
