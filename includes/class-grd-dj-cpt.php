@@ -155,13 +155,13 @@ class GRDR_Grd_Dj_Cpt extends CPT_Core {
 			'type'             => 'select',
 			'show_option_none' => false,
 			'options'          => array(
-				'mon' => __( 'Monday', 'grd-rotator' ),
-				'tue' => __( 'Tuesday', 'grd-rotator' ),
-				'wed' => __( 'Wednesday', 'grd-rotator' ),
-				'thu' => __( 'Thursday', 'grd-rotator' ),
-				'fri' => __( 'Friday', 'grd-rotator' ),
-				'sat' => __( 'Saturday', 'grd-rotator' ),
-				'sun' => __( 'Sunday', 'grd-rotator' ),
+				'Mon' => __( 'Monday', 'grd-rotator' ),
+				'Tue' => __( 'Tuesday', 'grd-rotator' ),
+				'Wed' => __( 'Wednesday', 'grd-rotator' ),
+				'Thu' => __( 'Thursday', 'grd-rotator' ),
+				'Fri' => __( 'Friday', 'grd-rotator' ),
+				'Sat' => __( 'Saturday', 'grd-rotator' ),
+				'Sun' => __( 'Sunday', 'grd-rotator' ),
 			),
 		) );
 
