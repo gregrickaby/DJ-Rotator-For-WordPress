@@ -40,8 +40,7 @@ function grd_get_all_djs( $args = array() ) {
 
 
 /**
- * Helper to get current local time
- * as set in General --> Settings.
+ * Helper to get blog time as set in General -> Settings.
  *
  * @since 1.0.0
  * @return string  Local time in UNIX format.
@@ -100,4 +99,25 @@ function grd_get_dj_bio( $post_ID = false ) {
 function grd_get_dj_schedule( $post_ID = false ) {
 	$post_ID = ( $post_ID ) ? $post_ID : get_the_ID();
 	return get_post_meta( $post_ID, 'grd_dj_schedule_group', true );
+}
+
+
+/**
+ * Create the DJ rotator HTML markup.
+ *
+ * @since 1.0.0
+ * @return string   The DJ rotator markup.
+ */
+function grd_get_dj_markup() {
+
+	ob_start(); ?>
+
+	<li class="dj">
+		<?php the_title( '<p class="dj-name">', '</p>' ); ?>
+		<img src="<?php echo esc_url( grd_get_dj_image_url() ); ?>" alt="<?php echo get_the_title(); ?>">
+		<?php echo wp_kses_post( grd_get_dj_bio() ); ?>
+	</li>
+
+	<?php
+	return ob_get_clean();
 }
