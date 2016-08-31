@@ -51,7 +51,7 @@ function grd_get_current_time() {
 
 
 /**
- * Helper to get DJ image ID.
+ * Helper to get DJ's image ID.
  *
  * @since 1.0.0
  * @param  int    $post_ID   The post ID.
@@ -64,7 +64,7 @@ function grd_get_dj_image_ID( $post_ID = false ) {
 
 
 /**
- * Helper to get DJ image URL.
+ * Helper to get DJ's image URL.
  *
  * @since 1.0.0
  * @param  int    $post_ID   The post ID.
@@ -77,7 +77,7 @@ function grd_get_dj_image_url( $post_ID = false ) {
 
 
 /**
- * Helper to get DJ biography.
+ * Helper to get DJ's biography.
  *
  * @since 1.0.0
  * @param  int    $post_ID   The post ID.
@@ -90,7 +90,7 @@ function grd_get_dj_bio( $post_ID = false ) {
 
 
 /**
- * Helper to get DJ schedule.
+ * Helper to get DJ's schedule.
  *
  * @since 1.0.0
  * @param  int    $post_ID   The post ID.
@@ -99,6 +99,58 @@ function grd_get_dj_bio( $post_ID = false ) {
 function grd_get_dj_schedule( $post_ID = false ) {
 	$post_ID = ( $post_ID ) ? $post_ID : get_the_ID();
 	return get_post_meta( $post_ID, 'grd_dj_schedule_group', true );
+}
+
+
+/**
+ * Helper to get DJ's website URL.
+ *
+ * @since 1.0.0
+ * @param  int    $post_ID   The post ID.
+ * @return string            The DJ's website URL.
+ */
+function grd_get_dj_website_url( $post_ID = false ) {
+	$post_ID = ( $post_ID ) ? $post_ID : get_the_ID();
+	return get_post_meta( $post_ID, 'grd_dj_website_url', true );
+}
+
+
+/**
+ * Helper to get DJ's Facebook URL.
+ *
+ * @since 1.0.0
+ * @param  int    $post_ID   The post ID.
+ * @return string            The DJ's Facebook URL.
+ */
+function grd_get_dj_facebook_url( $post_ID = false ) {
+	$post_ID = ( $post_ID ) ? $post_ID : get_the_ID();
+	return get_post_meta( $post_ID, 'grd_dj_facebook_url', true );
+}
+
+
+/**
+ * Helper to get DJ's Twitter URL.
+ *
+ * @since 1.0.0
+ * @param  int    $post_ID   The post ID.
+ * @return string            The DJ's Facebook URL.
+ */
+function grd_get_dj_twitter_url( $post_ID = false ) {
+	$post_ID = ( $post_ID ) ? $post_ID : get_the_ID();
+	return get_post_meta( $post_ID, 'grd_dj_twitter_url', true );
+}
+
+
+/**
+ * Helper to get DJ's Instagram URL.
+ *
+ * @since 1.0.0
+ * @param  int    $post_ID   The post ID.
+ * @return string            The DJ's Instagram URL.
+ */
+function grd_get_dj_instagram_url( $post_ID = false ) {
+	$post_ID = ( $post_ID ) ? $post_ID : get_the_ID();
+	return get_post_meta( $post_ID, 'grd_dj_instagram_url', true );
 }
 
 
@@ -112,11 +164,29 @@ function grd_get_dj_markup() {
 
 	ob_start(); ?>
 
-	<li class="dj">
-		<?php the_title( '<p class="dj-name">', '</p>' ); ?>
+	<figure class="dj">
 		<img src="<?php echo esc_url( grd_get_dj_image_url() ); ?>" alt="<?php echo get_the_title(); ?>">
-		<?php echo wp_kses_post( grd_get_dj_bio() ); ?>
-	</li>
+		<figcaption>
+			<p class="dj-name"><?php the_title(); ?></p>
+			<p class="dj-bio"><?php echo wp_kses_post( grd_get_dj_bio() ); ?></p>
+
+			<?php if ( grd_get_dj_website_url() ) : ?>
+				<a class="dj-url dj-website" href="<?php echo esc_url( grd_get_dj_website_url() ); ?>"><?php esc_html_e( 'Website', 'grd-rotator' ); ?></a>
+			<?php endif; ?>
+
+			<?php if ( grd_get_dj_facebook_url() ) : ?>
+				<a class="dj-url dj-facebook" href="<?php echo esc_url( grd_get_dj_facebook_url() ); ?>"><?php esc_html_e( 'Facebook', 'grd-rotator' ); ?></a>
+			<?php endif; ?>
+
+			<?php if ( grd_get_dj_twitter_url() ) : ?>
+				<a class="dj-url dj-twitter" href="<?php echo esc_url( grd_get_dj_twitter_url() ); ?>"><?php esc_html_e( 'Twitter', 'grd-rotator' ); ?></a>
+			<?php endif; ?>
+
+			<?php if ( grd_get_dj_instagram_url() ) : ?>
+				<a class="dj-url dj-instagram" href="<?php echo esc_url( grd_get_dj_instagram_url() ); ?>"><?php esc_html_e( 'Instagram', 'grd-rotator' ); ?></a>
+			<?php endif; ?>
+		</figcaption>
+	</figure>
 
 	<?php
 	return ob_get_clean();
