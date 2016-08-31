@@ -149,32 +149,26 @@ class GRDR_Grd_Dj_Widget extends WP_Widget {
 		echo ( $atts['title'] ) ? $atts['before_title'] . esc_html( $atts['title'] ) . $atts['after_title'] : '';
 
 		// If there are DJs...
-		if ( $dj_query->have_posts() ) : ?>
+		if ( $dj_query->have_posts() ) :
 
-			<ul class="dj-rotator">
+			while ( $dj_query->have_posts() ) : $dj_query->the_post();
 
-			<?php
-				while ( $dj_query->have_posts() ) : $dj_query->the_post();
+				// Get this DJ's shifts.
+				$shifts = grd_get_dj_schedule();
 
-					// Get this DJ's shifts.
-					$shifts = grd_get_dj_schedule();
+				// Loop through shifts.
+				foreach ( $shifts as $shift ) :
 
-					// Loop through shifts.
-					foreach ( $shifts as $shift ) :
+					// Only echo if the shift falls between this date/time comparison.
+					if ( $shift['grd_dj_weekday'] == $current_weekday && $shift['grd_dj_start_time'] <= $current_time && $shift['grd_dj_end_time'] >= $current_time ) :
+						echo grd_get_dj_markup();
+					endif;
 
-						// Only echo if the shift falls between this date/time comparison.
-						if ( $shift['grd_dj_weekday'] == $current_weekday && $shift['grd_dj_start_time'] <= $current_time && $shift['grd_dj_end_time'] >= $current_time ) :
-							echo grd_get_dj_markup();
-						endif;
+				endforeach;
 
-					endforeach;
-				endwhile;
-				wp_reset_postdata();
-			?>
-
-			</ul><!-- .dj-rotator -->
-
-		<?php endif;
+			endwhile;
+			wp_reset_postdata();
+		endif;
 		echo $atts['after_widget'];
 
 		// Return widget markup.
