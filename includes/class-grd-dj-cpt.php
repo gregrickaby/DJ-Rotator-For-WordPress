@@ -42,12 +42,14 @@ class GRDR_Grd_Dj_Cpt extends CPT_Core {
 			array(
 				__( 'DJ', 'grd-rotator' ),
 				__( 'DJs', 'grd-rotator' ),
-				'grd-djs',
+				'grd-rotator',
 			),
 			array(
-				'menu_icon' => 'dashicons-microphone',
-				'rewrite'   => array( 'slug' => 'djs' ),
-				'supports'  => array( 'title', 'revisions' ),
+				'menu_icon'           => 'dashicons-microphone',
+				'supports'            => array( 'title', 'revisions' ),
+				'has_archive'         => false,
+				'exclude_from_search' => true,
+				'publicly_queryable'  => false,
 			)
 		);
 	}
@@ -74,7 +76,7 @@ class GRDR_Grd_Dj_Cpt extends CPT_Core {
 		$cmb = new_cmb2_box( array(
 			'id'            => $prefix . 'metabox',
 			'title'         => __( 'DJ Options', 'grd-rotator' ),
-			'object_types'  => array( 'grd-djs' ),
+			'object_types'  => array( 'grd-rotator' ),
 		) );
 
 		/**
@@ -203,7 +205,7 @@ class GRDR_Grd_Dj_Cpt extends CPT_Core {
 
 			// Set up query args.
 			$defaults = array(
-				'post_type'              => 'grd-djs',
+				'post_type'              => 'grd-rotator',
 				'no_found_rows'          => true,
 				'update_post_meta_cache' => false,
 				'update_post_term_cache' => false,
@@ -215,8 +217,8 @@ class GRDR_Grd_Dj_Cpt extends CPT_Core {
 			// Run query.
 			$data = new WP_Query( $args );
 
-			// Set transient, and expire after a max of 12 hours.
-			set_transient( $transient_key, $data, 12 * HOUR_IN_SECONDS );
+			// Set transient, and expire after a max of 24 hours.
+			set_transient( $transient_key, $data, 24 * HOUR_IN_SECONDS );
 
 		}
 
