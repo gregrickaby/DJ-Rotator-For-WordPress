@@ -164,26 +164,26 @@ function grd_get_dj_markup() {
 
 	ob_start(); ?>
 
-	<figure class="dj">
+	<figure class="dj-container" style="margin: 0; padding: 0;">
 		<img src="<?php echo esc_url( grd_get_dj_image_url() ); ?>" alt="<?php echo get_the_title(); ?>">
 		<figcaption>
 			<p class="dj-name"><?php the_title(); ?></p>
 			<p class="dj-bio"><?php echo wp_kses_post( grd_get_dj_bio() ); ?></p>
 
 			<?php if ( grd_get_dj_website_url() ) : ?>
-				<a class="dj-url dj-website" href="<?php echo esc_url( grd_get_dj_website_url() ); ?>"><?php esc_html_e( 'Website', 'grd-rotator' ); ?></a>
+				<a class="dj-url dj-website" href="<?php echo esc_url( grd_get_dj_website_url() ); ?>" title="<?php esc_html_e( 'Click to read more about this DJ', 'grd-rotator' ); ?>"><?php esc_html_e( 'Website', 'grd-rotator' ); ?></a>
 			<?php endif; ?>
 
 			<?php if ( grd_get_dj_facebook_url() ) : ?>
-				<a class="dj-url dj-facebook" href="<?php echo esc_url( grd_get_dj_facebook_url() ); ?>"><?php esc_html_e( 'Facebook', 'grd-rotator' ); ?></a>
+				<a class="dj-url dj-facebook" href="<?php echo esc_url( grd_get_dj_facebook_url() ); ?>" title="<?php esc_html_e( 'Click to view this DJ on Facebook', 'grd-rotator' ); ?>"><?php esc_html_e( 'Facebook', 'grd-rotator' ); ?></a>
 			<?php endif; ?>
 
 			<?php if ( grd_get_dj_twitter_url() ) : ?>
-				<a class="dj-url dj-twitter" href="<?php echo esc_url( grd_get_dj_twitter_url() ); ?>"><?php esc_html_e( 'Twitter', 'grd-rotator' ); ?></a>
+				<a class="dj-url dj-twitter" href="<?php echo esc_url( grd_get_dj_twitter_url() ); ?>" title="<?php esc_html_e( 'Click to view this DJ on Twitter', 'grd-rotator' ); ?>"><?php esc_html_e( 'Twitter', 'grd-rotator' ); ?></a>
 			<?php endif; ?>
 
 			<?php if ( grd_get_dj_instagram_url() ) : ?>
-				<a class="dj-url dj-instagram" href="<?php echo esc_url( grd_get_dj_instagram_url() ); ?>"><?php esc_html_e( 'Instagram', 'grd-rotator' ); ?></a>
+				<a class="dj-url dj-instagram" href="<?php echo esc_url( grd_get_dj_instagram_url() ); ?>" title="<?php esc_html_e( 'Click to view this DJ on Instagram', 'grd-rotator' ); ?>"><?php esc_html_e( 'Instagram', 'grd-rotator' ); ?></a>
 			<?php endif; ?>
 		</figcaption>
 	</figure>
